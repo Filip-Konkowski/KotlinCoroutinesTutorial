@@ -9,15 +9,14 @@ fun main() {
 
     val job = scope.launch {
 
-        println("Hello")
+        this.logContext(this.toString())
+        logMessage("Hello")
         delay(1000)
 
     }
 
     Thread.sleep(2000)
-    println("world")
-
-
+    logMessage("world")
 }
 
 
