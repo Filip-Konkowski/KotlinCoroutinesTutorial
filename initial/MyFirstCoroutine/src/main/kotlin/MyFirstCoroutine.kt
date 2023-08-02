@@ -5,9 +5,12 @@ import kotlin.coroutines.CoroutineContext
 
 fun main() {
 
-    val scope = CoroutineScope(Dispatchers.Default)
+    val job1 = Job()
 
-    val job = scope.launch {
+    val scope = CoroutineScope(Dispatchers.Default + job1)
+
+    // the lunch will have scope in context of parents Dispatchers.Default + job1 see img/jobContext1.png
+    val job2  = scope.launch {
 
         this.logContext(this.toString())
         logMessage("Hello")
