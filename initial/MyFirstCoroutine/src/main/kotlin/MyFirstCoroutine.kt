@@ -36,6 +36,20 @@ fun main() {
 //        logMessage("End of Job2")
 //    }
 
+    scope.launch {
+        val jobs: List<Job> = (1..5).map {
+            launch(start = CoroutineStart.LAZY) {
+                logMessage("Start coroutine $it")
+                delay(100)
+                logMessage("End coroutine $it")
+            }
+        }
+
+        logMessage("Created all Coroutines")
+        jobs.joinAll() // as start is LAZY it will only run coroutine after join() or start() called
+        logMessage("Complete all Coroutines")
+    }
+
     Thread.sleep(2000)
     logMessage("world")
 }
