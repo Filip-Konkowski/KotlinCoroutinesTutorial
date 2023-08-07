@@ -74,18 +74,14 @@ private suspend fun logHelloWorld() {
     logMessage("leaving logHelloWorld")
 }
 
-private suspend fun worldMessage() {
-    withContext(Dispatchers.Default) {
-        val myPrime = BigInteger.probablePrime(4096, java.util.Random())
-        logMessage("World $myPrime")
-    }
+private suspend fun worldMessage() = withContext(Dispatchers.Default) {
+    val myPrime = BigInteger.probablePrime(4096, java.util.Random())
+    logMessage("World $myPrime")
 }
 
-private suspend fun helloMessage() {
-    withContext(Dispatchers.Default) {
-        val myPrime = BigInteger.probablePrime(4096, java.util.Random())
-        logMessage("Wrold $myPrime")
-    }
+private suspend fun helloMessage() = withContext(Dispatchers.Default) {
+    val myPrime = BigInteger.probablePrime(4096, java.util.Random())
+    logMessage("Wrold $myPrime")
 }
 
 
