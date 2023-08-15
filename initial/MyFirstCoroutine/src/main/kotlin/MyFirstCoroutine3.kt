@@ -7,16 +7,19 @@ fun main() = runBlocking {
 
 
     logMessage3("Hello")
-
-    val jobs: List<Job> = (1..5).map {
-        launch(start = CoroutineStart.LAZY) {
-            logMessage3("Started Coroutine $it")
-            delay(100)
-            logMessage3("Ended Coroutine $it")
+    coroutineScope {
+        val jobs: List<Job> = (1..5).map {
+            launch(start = CoroutineStart.LAZY) {
+                logMessage3("Started Coroutine $it")
+                delay(100)
+                logMessage3("Ended Coroutine $it")
+            }
         }
-    }
+
     logMessage3("Created all Coroutines")
     jobs.forEach { it.start() }
+    }
+
     logMessage3("Finished all Coroutines")
 
     logMessage3("world")
