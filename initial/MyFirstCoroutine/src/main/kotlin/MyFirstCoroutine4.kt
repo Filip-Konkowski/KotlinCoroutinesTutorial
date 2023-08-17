@@ -23,7 +23,9 @@ fun main() = runBlocking {
     delay(1000L)
     logMessage4("Cancel!")
 
-    //job1.cancel()
+    // with this cancellation coroutine will not stop.
+    // The coroutine is non-cooperative
+    job1.cancel()
     logMessage4("Done!")
     delay(5000)
 
