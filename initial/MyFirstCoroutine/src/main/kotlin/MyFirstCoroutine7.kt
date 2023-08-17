@@ -14,7 +14,8 @@ val handler2 = CoroutineExceptionHandler { _: CoroutineContext, throwable: Throw
 fun main() = runBlocking {
 
     val scope = CoroutineScope(Job() + handler1)
-
+    // here memeber that handler must be added to rrot corutine
+    // if just added to child it won't work
     //Parent 1
     scope.launch {
 
