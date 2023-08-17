@@ -36,19 +36,52 @@ import kotlinx.coroutines.*
 
 
 
-//TODO - 2 Lets see how we can make our Coroutine cooperative with Cancellation by using the isActive state.
+////TODO - 2 Lets see how we can make our Coroutine cooperative with Cancellation by using the isActive state.
+//fun main() = runBlocking {
+//
+//
+//    val scope = CoroutineScope(Dispatchers.Default + CoroutineName("isActive"))
+//
+//    val startTime = System.currentTimeMillis()
+//    val job1 = scope.launch() {
+//        var nextPrintTime = startTime
+//        var i = 0
+//        // Hint: We could modify the while loop.
+//        while (i < 5 && isActive) {
+//            // print a message twice a second
+//            if (System.currentTimeMillis() >= nextPrintTime) {
+//                logMessage4("Hello World ${i++}")
+//                nextPrintTime += 500L
+//            }
+//        }
+//
+//    }
+//
+//    delay(1000L)
+//    logMessage4("Cancel!")
+//    job1.cancel()
+//    logMessage4("Done!")
+//    delay(5000)
+//
+//}
+
+
+
+
+//TODO - 3 We have successfully used the isActive property, but there is another way, the ensureActive() function, lets modify the code to use it.
 fun main() = runBlocking {
 
 
-    val scope = CoroutineScope(Dispatchers.Default + CoroutineName("isActive"))
+    val scope = CoroutineScope(Dispatchers.Default + CoroutineName("ensureActive"))
 
     val startTime = System.currentTimeMillis()
     val job1 = scope.launch() {
         var nextPrintTime = startTime
         var i = 0
-        // Hint: We could modify the while loop.
-        while (i < 5 && isActive) {
+        while (i < 5) {
+            // Hint: This may be a good place to ensure our coroutine is still active.
             // print a message twice a second
+            ensureActive()
             if (System.currentTimeMillis() >= nextPrintTime) {
                 logMessage4("Hello World ${i++}")
                 nextPrintTime += 500L
@@ -64,38 +97,6 @@ fun main() = runBlocking {
     delay(5000)
 
 }
-
-
-
-/*
-//TODO - 3 We have successfully used the isActive property, but there is another way, the ensureActive() function, lets modify the code to use it.
-fun main() = runBlocking {
-
-
-    val scope = CoroutineScope(Dispatchers.Default + CoroutineName("ensureActive"))
-
-    val startTime = System.currentTimeMillis()
-    val job1 = scope.launch() {
-        var nextPrintTime = startTime
-        var i = 0
-        while (i < 5) {
-            // Hint: This may be a good place to ensure our coroutine is still active.
-            // print a message twice a second
-            if (System.currentTimeMillis() >= nextPrintTime) {
-                logMessage4("Hello World ${i++}")
-                nextPrintTime += 500L
-            }
-        }
-
-    }
-
-    delay(1000L)
-    logMessage4("Cancel!")
-    job1.cancel()
-    logMessage4("Done!")
-    delay(5000)
-
-}*/
 
 
 /*
