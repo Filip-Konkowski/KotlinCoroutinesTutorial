@@ -1,40 +1,40 @@
 import kotlinx.coroutines.*
 
 //TODO - 1 Lets run the code and see that our Coroutine is not cooperative with Cancellation.
-fun main() = runBlocking {
-
-
-    val scope = CoroutineScope(Dispatchers.Default + CoroutineName("Non-Cooperative"))
-
-    val startTime = System.currentTimeMillis()
-    val job1 = scope.launch() {
-        var nextPrintTime = startTime
-        var i = 0
-        while (i < 5) {
-            // print a message twice a second
-            if (System.currentTimeMillis() >= nextPrintTime) {
-                logMessage4("Hello World ${i++}")
-                nextPrintTime += 500L
-            }
-        }
-
-    }
-
-    delay(1000L)
-    logMessage4("Cancel!")
-
-    // with this cancellation coroutine will not stop.
-    // The coroutine is non-cooperative
-    job1.cancel()
-    logMessage4("Done!")
-    delay(5000)
-
-}
+//fun main() = runBlocking {
+//
+//
+//    val scope = CoroutineScope(Dispatchers.Default + CoroutineName("Non-Cooperative"))
+//
+//    val startTime = System.currentTimeMillis()
+//    val job1 = scope.launch() {
+//        var nextPrintTime = startTime
+//        var i = 0
+//        while (i < 5) {
+//            // print a message twice a second
+//            if (System.currentTimeMillis() >= nextPrintTime) {
+//                logMessage4("Hello World ${i++}")
+//                nextPrintTime += 500L
+//            }
+//        }
+//
+//    }
+//
+//    delay(1000L)
+//    logMessage4("Cancel!")
+//
+//    // with this cancellation coroutine will not stop.
+//    // The coroutine is non-cooperative
+//    job1.cancel()
+//    logMessage4("Done!")
+//    delay(5000)
+//
+//}
 
 // Please scroll down for next examples... :)
 
 
-/*
+
 
 //TODO - 2 Lets see how we can make our Coroutine cooperative with Cancellation by using the isActive state.
 fun main() = runBlocking {
@@ -47,7 +47,7 @@ fun main() = runBlocking {
         var nextPrintTime = startTime
         var i = 0
         // Hint: We could modify the while loop.
-        while (i < 5) {
+        while (i < 5 && isActive) {
             // print a message twice a second
             if (System.currentTimeMillis() >= nextPrintTime) {
                 logMessage4("Hello World ${i++}")
@@ -65,7 +65,6 @@ fun main() = runBlocking {
 
 }
 
-*/
 
 
 /*
