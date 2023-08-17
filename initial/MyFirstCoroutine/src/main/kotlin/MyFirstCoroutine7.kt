@@ -3,17 +3,17 @@ import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
 
 val handler1 = CoroutineExceptionHandler { _: CoroutineContext, throwable: Throwable ->
-    logMessage("CEH1 handling ${throwable.localizedMessage}")
+    logMessage7("CEH1 handling ${throwable.localizedMessage}")
 }
 
 val handler2 = CoroutineExceptionHandler { _: CoroutineContext, throwable: Throwable ->
-    logMessage("CEH2 handling ${throwable.localizedMessage}")
+    logMessage7("CEH2 handling ${throwable.localizedMessage}")
 }
 
 
 fun main() = runBlocking {
 
-    val scope = CoroutineScope(Job())
+    val scope = CoroutineScope(Job() + handler1)
 
     //Parent 1
     scope.launch {
@@ -24,20 +24,20 @@ fun main() = runBlocking {
             //Child 1 of Child 1
             launch {
                 try {
-                    logContext(">>>Child 1s Child")
+                    logContext7(">>>Child 1s Child")
                     delay(1)
-                    logMessage(">>>Hello from Child 1s Child!")
+                    logMessage7(">>>Hello from Child 1s Child!")
                 } catch (e: Exception) {
-                    logMessage(">>>Child 1s Child got ${e.javaClass}  ${e.localizedMessage}")
+                    logMessage7(">>>Child 1s Child got ${e.javaClass}  ${e.localizedMessage}")
                 }
             }
 
-            logContext(">>Child 1")
+            logContext7(">>Child 1")
             try {
                 delay(10)
-                logMessage(">>Hello from Child 1")
+                logMessage7(">>Hello from Child 1")
             } catch (e: Exception) {
-                logMessage(">>Child 1 got ${e.javaClass}  ${e.localizedMessage}")
+                logMessage7(">>Child 1 got ${e.javaClass}  ${e.localizedMessage}")
             }
         }
 
@@ -47,27 +47,27 @@ fun main() = runBlocking {
             //Child 1 of Child 2
             launch {
                 try {
-                    logContext(">>>Child 2s Child")
+                    logContext7(">>>Child 2s Child")
                     delay(1)
-                    logMessage(">>>Hello from Child 2s Child!")
+                    logMessage7(">>>Hello from Child 2s Child!")
                 } catch (e: Exception) {
-                    logMessage(">>>Child 2s Child got ${e.javaClass}  ${e.localizedMessage}")
+                    logMessage7(">>>Child 2s Child got ${e.javaClass}  ${e.localizedMessage}")
                 }
             }
 
 
-            logContext(">>Child 2")
+            logContext7(">>Child 2")
             throw IndexOutOfBoundsException("oops!")
             delay(10)
-            logMessage(">>Hello from Child 2")
+            logMessage7(">>Hello from Child 2")
         }
 
         try {
-            logContext(">Parent 1")
+            logContext7(">Parent 1")
             delay(30)
-            logMessage(">Hello from Parent 1")
+            logMessage7(">Hello from Parent 1")
         } catch (e: Exception) {
-            logMessage(">Parent 1 got ${e.javaClass}  ${e.localizedMessage}")
+            logMessage7(">Parent 1 got ${e.javaClass}  ${e.localizedMessage}")
         }
     }
 
@@ -75,32 +75,32 @@ fun main() = runBlocking {
     scope.launch {
 
         try {
-            logContext(">Parent 2")
+            logContext7(">Parent 2")
             delay(100)
-            logMessage(">Hello from Parent 2")
+            logMessage7(">Hello from Parent 2")
 
         } catch (e: Exception) {
-            logMessage(">Parent 2 got ${e.javaClass}  ${e.localizedMessage}")
+            logMessage7(">Parent 2 got ${e.javaClass}  ${e.localizedMessage}")
         }
     }
 
     delay(1000)
-    logMessage("The End.")
+    logMessage7("The End.")
 
 }
 
 
-fun logMessage(msg: String) {
+fun logMessage7(msg: String) {
     println("Running on: [${Thread.currentThread().name}] | $msg")
 }
 
 
-fun CoroutineScope.logContext(id: String) {
-    coroutineContext.logDetails(id)
+fun CoroutineScope.logContext7(id: String) {
+    coroutineContext.logDetails7(id)
 }
 
 
-fun CoroutineContext.logDetails(id: String) {
+fun CoroutineContext.logDetails7(id: String) {
     sequenceOf(
         Job,
         ContinuationInterceptor,
@@ -108,5 +108,5 @@ fun CoroutineContext.logDetails(id: String) {
         CoroutineName
     )
         .mapNotNull { key -> this[key] }
-        .forEach { logMessage("id: $id ${it.key} = $it") }
+        .forEach { logMessage7("id: $id ${it.key} = $it") }
 }
