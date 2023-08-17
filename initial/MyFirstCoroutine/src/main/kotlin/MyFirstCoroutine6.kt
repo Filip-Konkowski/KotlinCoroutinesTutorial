@@ -5,61 +5,64 @@ import kotlin.coroutines.CoroutineContext
 
 fun main() = runBlocking {
 
-    val scope = CoroutineScope(Job())
+    val scope = CoroutineScope(SupervisorJob())
 
     //Parent 1
     scope.launch {
 
-        //Child 1
-        launch {
-
-            //Child 1 of Child 1
+        supervisorScope {
+            //Child 1
             launch {
+
+                //Child 1 of Child 1
+                launch {
+                    try {
+                        logContext6(">>>Child 1s Child")
+                        delay(1)
+                        logMessage6(">>>Hello from Child 1s Child!")
+                    } catch (e: Exception) {
+                        logMessage6(">>>Child 1s Child got ${e.javaClass}  ${e.localizedMessage}")
+                    }
+                }
+
+                logContext6(">>Child 1")
                 try {
-                    logContext6(">>>Child 1s Child")
-                    delay(1)
-                    logMessage6(">>>Hello from Child 1s Child!")
+                    delay(10)
+                    logMessage6(">>Hello from Child 1")
                 } catch (e: Exception) {
-                    logMessage6(">>>Child 1s Child got ${e.javaClass}  ${e.localizedMessage}")
+                    logMessage6(">>Child 1 got ${e.javaClass}  ${e.localizedMessage}")
                 }
             }
 
-            logContext6(">>Child 1")
-            try {
+            //Child 2
+            launch {
+
+                //Child 1 of Child 2
+                launch {
+                    try {
+                        logContext6(">>>Child 2s Child")
+                        delay(1)
+                        logMessage6(">>>Hello from Child 2s Child!")
+                    } catch (e: Exception) {
+                        logMessage6(">>>Child 2s Child got ${e.javaClass}  ${e.localizedMessage}")
+                    }
+                }
+
+                logContext6(">>Child 2")
+                throw IndexOutOfBoundsException("oops!")
                 delay(10)
-                logMessage6(">>Hello from Child 1")
+                logMessage6(">>Hello from Child 2")
+            }
+
+            try {
+                logContext6(">Parent 1")
+                delay(30)
+                logMessage6(">Hello from Parent 1")
             } catch (e: Exception) {
-                logMessage6(">>Child 1 got ${e.javaClass}  ${e.localizedMessage}")
+                logMessage6(">Parent 1 got ${e.javaClass}  ${e.localizedMessage}")
             }
         }
 
-        //Child 2
-        launch {
-
-            //Child 1 of Child 2
-            launch {
-                try {
-                    logContext6(">>>Child 2s Child")
-                    delay(1)
-                    logMessage6(">>>Hello from Child 2s Child!")
-                } catch (e: Exception) {
-                    logMessage6(">>>Child 2s Child got ${e.javaClass}  ${e.localizedMessage}")
-                }
-            }
-
-            logContext6(">>Child 2")
-            // throw IndexOutOfBoundsException("oops!")
-            delay(10)
-            logMessage6(">>Hello from Child 2")
-        }
-
-        try {
-            logContext6(">Parent 1")
-            delay(30)
-            logMessage6(">Hello from Parent 1")
-        } catch (e: Exception) {
-            logMessage6(">Parent 1 got ${e.javaClass}  ${e.localizedMessage}")
-        }
     }
 
 
