@@ -101,37 +101,37 @@ import kotlinx.coroutines.*
 
 
 //TODO - 4 All Kotlin Coroutine framework 'suspend' functions are cooperative, so by using them our code also becomes cooperative, lets use the yield function.
-fun main() = runBlocking {
+//fun main() = runBlocking {
+//
+//
+//    val scope = CoroutineScope(Dispatchers.Default + CoroutineName("yield"))
+//    val startTime = System.currentTimeMillis()
+//    val job1 = scope.launch() {
+//        var nextPrintTime = startTime
+//        var i = 0
+//        while (i < 5) {
+//            //Hint: this maybe a good place to yeild.
+//            // print a message twice a second
+//            yield()
+//            if (System.currentTimeMillis() >= nextPrintTime) {
+//                logMessage4("Hello World ${i++}")
+//                nextPrintTime += 500L
+//            }
+//        }
+//
+//    }
+//
+//    delay(1000L)
+//    logMessage4("Cancel!")
+//    job1.cancel()
+//    logMessage4("Done!")
+//    delay(5000)
+//
+//}
 
 
-    val scope = CoroutineScope(Dispatchers.Default + CoroutineName("yield"))
-    val startTime = System.currentTimeMillis()
-    val job1 = scope.launch() {
-        var nextPrintTime = startTime
-        var i = 0
-        while (i < 5) {
-            //Hint: this maybe a good place to yeild.
-            // print a message twice a second
-            yield()
-            if (System.currentTimeMillis() >= nextPrintTime) {
-                logMessage4("Hello World ${i++}")
-                nextPrintTime += 500L
-            }
-        }
-
-    }
-
-    delay(1000L)
-    logMessage4("Cancel!")
-    job1.cancel()
-    logMessage4("Done!")
-    delay(5000)
-
-}
 
 
-
-/*
 //TODO - 4 All Kotlin Coroutine framework 'suspend' functions are cooperative, so by using them our code also becomes cooperative, lets use the delay function.
 fun main() = runBlocking {
 
@@ -145,6 +145,7 @@ fun main() = runBlocking {
         while (i < 5) {
             //Hint: this maybe a good place to delay.
             // print a message twice a second
+            delay(1)
             if (System.currentTimeMillis() >= nextPrintTime) {
                 logMessage4("Hello World ${i++}")
                 nextPrintTime += 500L
@@ -160,7 +161,7 @@ fun main() = runBlocking {
     delay(5000)
 }
 
-*/
+
 
 
 
