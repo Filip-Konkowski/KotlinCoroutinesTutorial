@@ -4,13 +4,16 @@ import kotlin.coroutines.CoroutineContext
 
 fun main() = runBlocking {
 
-    val scope = CoroutineScope(Job())
+    val scope = CoroutineScope(SupervisorJob())
 
     scope.launch {
+        delay(10)
         logMessage5("Hello")
     }
 
     scope.launch {
+        throw IndexOutOfBoundsException("oops")
+        delay(10)
         logMessage5("World")
     }
 
