@@ -3,7 +3,6 @@ import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
 import kotlin.system.measureTimeMillis
 
-
 fun main() = runBlocking {
     launch {
         logMessage2("Pre>>>")
@@ -17,7 +16,6 @@ fun main() = runBlocking {
     logMessage2("completing main function...")
 
 }
-
 
 private suspend fun logHelloWorld(): String = withContext(Dispatchers.Default) {
     logMessage2("in logHelloWorld")
@@ -40,16 +38,13 @@ private suspend fun worldMessage(): String = withContext(Dispatchers.Default) {
     "World!!"
 }
 
-
 fun logMessage2(msg: String) {
     println("Running on: [${Thread.currentThread().name}] | $msg")
 }
 
-
 fun CoroutineScope.logContext2(id: String) {
     coroutineContext.logDetails2(id)
 }
-
 
 fun CoroutineContext.logDetails2(id: String) {
     sequenceOf(
