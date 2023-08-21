@@ -10,7 +10,6 @@ val handler2 = CoroutineExceptionHandler { _: CoroutineContext, throwable: Throw
     logMessage7("CEH2 handling ${throwable.localizedMessage}")
 }
 
-
 fun main() = runBlocking {
 
     val scope = CoroutineScope(Job() + handler1)
@@ -95,11 +94,9 @@ fun logMessage7(msg: String) {
     println("Running on: [${Thread.currentThread().name}] | $msg")
 }
 
-
 fun CoroutineScope.logContext7(id: String) {
     coroutineContext.logDetails7(id)
 }
-
 
 fun CoroutineContext.logDetails7(id: String) {
     sequenceOf(
